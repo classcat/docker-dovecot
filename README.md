@@ -1,5 +1,6 @@
-# docker-dovecot
-dovecot pop/imap server
+# Dovecot POP/IMAP Server
+
+Run dovecot pop/imap server in a container.
 
 ## Usage
 
