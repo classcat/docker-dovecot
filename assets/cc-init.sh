@@ -2,7 +2,6 @@
 
 function config_dovecot () {
   sed -i -e "s/^#disable_plaintext_auth\s*=\s*yes/disable_plaintext_auth = no/" 10-auth.conf
-  
 }
 
 function add_accounts () {
