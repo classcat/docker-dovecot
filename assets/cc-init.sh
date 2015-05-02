@@ -1,5 +1,14 @@
 #!/bin/bash
 
+########################################################################
+# ClassCat/Dovecot Asset files
+# maintainer: Masashi Okumura < masao@classcat.com >
+########################################################################
+
+### HISTORY ###
+# 03-may-15 : Removed the nodaemon steps.
+#
+
 function config_dovecot () {
   sed -i -e "s/^#disable_plaintext_auth\s*=\s*yes/disable_plaintext_auth = no/" /etc/dovecot/conf.d/10-auth.conf
 }
@@ -23,9 +32,6 @@ function proc_dovecot () {
 # See http://docs.docker.com/articles/using_supervisord/
 function proc_supervisor () {
   cat > /etc/supervisor/conf.d/supervisord.conf <<EOF
-[supervisord]
-nodaemon=true
-
 [program:dovecot]
 command=/opt/cc-dovecot.sh
 
