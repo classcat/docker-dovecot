@@ -6,8 +6,23 @@
 ########################################################################
 
 ### HISTORY ###
+# 04-may-15 : Add sshd and code portion to handle root password.
 # 03-may-15 : Removed the nodaemon steps.
 #
+
+############
+### SSHD ###
+############
+
+function change_root_password() {
+  echo -e "root:${password}" | chpasswd
+  # echo -e "${password}\n${password}" | passwd root
+}
+
+
+###############
+### DOVECOT ###
+###############
 
 function config_dovecot () {
   sed -i -e "s/^#disable_plaintext_auth\s*=\s*yes/disable_plaintext_auth = no/" /etc/dovecot/conf.d/10-auth.conf
@@ -35,6 +50,9 @@ function proc_supervisor () {
 [program:dovecot]
 command=/opt/cc-dovecot.sh
 
+[program:ssh]
+command=/usr/sbin/sshd -D
+
 [program:rsyslog]
 command=/usr/sbin/rsyslogd -n -c3
 EOF
@@ -42,7 +60,6 @@ EOF
   cat >> /opt/cc-dovecot.sh <<EOF
 #!/bin/bash
 /etc/init.d/dovecot start
-pkill tail
 tail -f /var/log/mail.log
 EOF
 
@@ -50,6 +67,7 @@ EOF
 }
 
 
+change_root_password
 proc_dovecot
 proc_supervisor
 
