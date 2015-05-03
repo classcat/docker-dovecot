@@ -10,6 +10,6 @@ ADD assets/cc-init.sh /opt/cc-init.sh
 
 ADD assets/dovecot /etc/init.d/dovecot
 
-EXPOSE 110 143
+EXPOSE 22 110 143
 
 CMD /opt/cc-init.sh && /usr/bin/supervisord -c /etc/supervisor/supervisord.conf
